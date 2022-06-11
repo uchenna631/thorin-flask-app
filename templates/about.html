@@ -13,19 +13,44 @@
         to leave on other business, welcomed a fourteenth to fill into their party.
     </p>
 
-    {% for member in company%}
+    <!-- Iterate over the company array for each member -->
+
+    {% for member in company %}
+    
 
     <div class="row featurette">
-        <div class="col-md-7">
-            <h3>{{member.name}}</h3>
-            <p>
-                {{member.description}}
-            </p>
-        </div>
-        <div class="col-md-5">
-            <img src="{{member.image_source}}" alt="" class="featurette-image image-responsive">
-        </div>
+
+        {% if loop.index % 2 != 0 %}
+
+            <div class="col-md-7">
+                <h3><a href="/about/{{ member.url }}">{{ loop.index }}.{{member.name}}</a></h3>
+                <p>{{member.description}}</p>
+            </div>
+            <div class="col-md-5">
+                <img src="{{member.image_source}}" alt="" class="featurette-image image-responsive">
+            </div>
+
+        {% else %}
+
+            </div>
+            <div class="col-md-5">
+                <img src="{{member.image_source}}" alt="" class="featurette-image image-responsive">
+            </div>
+            <div class="col-md-7">
+                <h3><a href="/about/{{ member.url }}">{{ loop.index }}.{{member.name}}</a></h3>
+                <h3><a href="/about/{{ member.name|replace(' ', '-')|replace('&', 'and')|replace('Ó', 'o') }}">{{ loop.index }}</a></h3>
+                <p>
+                    {{member.description}}
+                </p>
+            </div>
+
+        {% endif %}
+
+        {% if loop.index != loop.length %}
+            <hr>
+        {% endif %}
     </div>
+
 
     {% endfor %}
 
